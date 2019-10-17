@@ -3,6 +3,10 @@ sigmoid <- function(x)
   return(1/(1+exp(-x)))
 }
 
+softmax <- function(x){
+  return(exp(x)/sum(exp(x)))
+}
+
 euc_dist <- function(z,w)
 {
   return(as.matrix(pdist(z,w)))

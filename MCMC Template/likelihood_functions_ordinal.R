@@ -9,9 +9,15 @@ likelihood_z<-function(given_z)
   wz_dist=euc_dist_ordinal(given_z,current_values$w)
   bt_mat=array(rep(outer(c(current_values$theta),c(current_values$beta),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
   term_mat_unnorm[term_mat_unnorm==0]=mytol
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
+  
   
   retval=sapply(1:nw,function(jj) 
     sapply(1:nz,function(ii) term_mat_norm[ii,jj,X[ii,jj]-minord+1]))
@@ -27,9 +33,14 @@ likelihood_w<-function(given_w)
   wz_dist=euc_dist_ordinal(current_values$z,given_w)
   bt_mat=array(rep(outer(c(current_values$theta),c(current_values$beta),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
   term_mat_unnorm[term_mat_unnorm==0]=mytol
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
   
   retval=sapply(1:nw,function(jj) 
     sapply(1:nz,function(ii) term_mat_norm[ii,jj,][X[ii,jj]-minord+1]))
@@ -45,9 +56,14 @@ likelihood_theta<-function(given_theta)
   wz_dist=euc_dist_ordinal(current_values$z,current_values$w)
   bt_mat=array(rep(outer(c(given_theta),c(current_values$beta),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
   term_mat_unnorm[term_mat_unnorm==0]=mytol
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
   
   retval=sapply(1:nw,function(jj) 
     sapply(1:nz,function(ii) term_mat_norm[ii,jj,][X[ii,jj]-minord+1]))
@@ -63,9 +79,14 @@ likelihood_beta<-function(given_beta)
   wz_dist=euc_dist_ordinal(current_values$z,current_values$w)
   bt_mat=array(rep(outer(c(current_values$theta),c(given_beta),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
   term_mat_unnorm[term_mat_unnorm==0]=mytol
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
   
   retval=sapply(1:nw,function(jj) 
     sapply(1:nz,function(ii) term_mat_norm[ii,jj,][X[ii,jj]-minord+1]))
@@ -81,9 +102,14 @@ likelihood_tau<-function(given_tau)
   wz_dist=euc_dist_ordinal(current_values$z,current_values$w)
   bt_mat=array(rep(outer(c(current_values$theta),c(current_values$beta),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
   term_mat_unnorm[term_mat_unnorm==0]=mytol
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
   
   retval=sapply(1:ntau,function(k) {r=term_mat_norm[,,k];
                 r*(X==k)+(1-(X==k))*(1-r)},simplify="array")
@@ -101,9 +127,14 @@ calculate_full_likelihood<-function(stored_parameters,kk)
   wz_dist=euc_dist_ordinal(stored_parameters$z[[kk]],stored_parameters$w[[kk]])
   bt_mat=array(rep(outer(c(stored_parameters$theta[[kk]]),c(stored_parameters$beta[[min(kk,length(stored_parameters$beta))]]),'+'),ntau),dim=c(nz,nw,ntau))
   
-  term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
-  term_mat_unnorm[term_mat_unnorm==0]=1e-320
-  term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  # term_mat_unnorm=sigmoid(tau_mat+bt_mat-wz_dist)
+  # term_mat_unnorm[term_mat_unnorm==0]=mytol
+  # term_mat_norm=aperm(apply(term_mat_unnorm,c(1,2),function(r) r/sum(r)),c(2,3,1)) #normalize
+  
+  term_mat_unnorm <- tau_mat+bt_mat-wz_dist
+  term_mat_unnorm[term_mat_unnorm==0]=mytol
+  term_mat_norm <- aperm(apply(term_mat_unnorm,c(1,2),softmax),c(2,3,1)) #normalize
+  term_mat_norm[term_mat_norm==0]=mytol
   
   retval=sapply(1:nw,function(jj) 
     sapply(1:nz,function(ii) term_mat_norm[ii,jj,][X[ii,jj]-minord+1]))
