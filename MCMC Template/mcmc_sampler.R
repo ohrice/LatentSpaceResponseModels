@@ -1,6 +1,3 @@
-setwd("C:/Users/erich/Desktop/LatentSpaceResponseModels/MCMC Template")
-
-library(tidyverse)
 require('invgamma')
 require('ggplot2')
 require('pdist')
@@ -31,7 +28,7 @@ run_mcmc_sampler<-function(M,myseed,config_number,plot_iter=1000,load_data,ordin
   if(!file.exists(plot_dirname)) {dir.create(plot_dirname)}
   save_filename=file.path(paste('Saved_output/saved_output_config_',config_number,'_seed_',myseed,'_data_',dataname,sep=''))
   
-  overwrite=F
+  overwrite=T
   if(file.exists(save_filename) & !overwrite)
   {
     load(save_filename,verb=T)
@@ -144,16 +141,14 @@ run_mcmc_sampler<-function(M,myseed,config_number,plot_iter=1000,load_data,ordin
     {
       print('acceptance rates:')
       print(sapply(acceptance_rates,function(x) mean(x,na.rm=T)))
-      print(data.frame(proposal_sigs))
-      save(stored_parameters,current_values,stored_likelihoods,stored_vars,hyperparameters,proposal_sigs,acceptance_rates,current_seed,varname_list,update_sigma_tf,X,file=save_filename)   
       plot_fun(stored_parameters,storej,mytitle=toString(jj),save_fig=T,save_filename=paste(plot_dirname,'/iteration_',jj,'.png',sep=''))
     }
   }
 }
 
 M=10000
-myseed=1111
-config_number=2
+myseed=223
+config_number=1
 plot_iter=100
 # load_data=load_spelling_data
 # ordinal=F
