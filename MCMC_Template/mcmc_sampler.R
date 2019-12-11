@@ -1,4 +1,4 @@
-setwd("C:/Users/erich/Desktop/LatentSpaceResponseModels")
+setwd("C:/Users/erich/Desktop/LatentSpaceResponseModels/MCMC_Template")
 
 library(tidyverse)
 require('invgamma')
@@ -23,7 +23,7 @@ run_mcmc_sampler<-function(M,myseed,config_number,plot_iter=1000,load_data,ordin
   load_data()
 
   ndim<<-2
-  assign("ncluster",2,envir = .GlobalEnv)
+  assign("ncluster",1,envir = .GlobalEnv)
   
   store_iter=1
   batch_size=2000
@@ -166,12 +166,12 @@ run_mcmc_sampler<-function(M,myseed,config_number,plot_iter=1000,load_data,ordin
   }
 }
 
-M=10000
-myseed=256
-config_number=1
+M=5000
+myseed=102095
+config_number=3
 plot_iter=10
-load_data=load_verbal_agression_data
-ordinal=T
+load_data=load_drv_data
+ordinal=F
 # load_data=load_spelling_data
 # ordinal=FALSE
 run_mcmc_sampler(M,myseed,config_number,plot_iter=plot_iter,load_data=load_data,ordinal=ordinal,save_fig=T)

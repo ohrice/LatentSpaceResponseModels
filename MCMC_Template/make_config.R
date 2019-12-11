@@ -1,12 +1,12 @@
 nu_config=10
-rate_all_config=0.001
-shape_all_config=0.001
+rate_all_config=100
+shape_all_config=100
 omega_init_config=5
 sigma_theta_config=.1
 sigma_mu_config=2
 sigma_beta_config=1
 cluster_sigma_config=1
-config_number=2
+config_number=3
 sigma_tau_config=.1 #only needed for ordinal
 config_filename=paste('Run_configs/config_',config_number,'.Rdat',sep='')
 overwrite=F

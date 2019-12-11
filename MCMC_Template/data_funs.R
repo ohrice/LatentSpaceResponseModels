@@ -9,6 +9,24 @@ load_spelling_data<-function()
   assign('nw',dim(X)[2],envir=.GlobalEnv)
 }
 
+load_abortion_data<-function()
+{
+  raw_data=read.table('../Data/abortion.txt')
+  assign("X",raw_data[!apply(is.na(raw_data),1,any),],envir=.GlobalEnv)
+  assign("dataname","abortion",envir=.GlobalEnv)
+  assign('nz',dim(X)[1],envir=.GlobalEnv)
+  assign('nw',dim(X)[2],envir=.GlobalEnv)
+}
+
+load_drv_data<-function()
+{
+  raw_data=read.table('../Data/drv_data.txt')
+  assign("X",raw_data[!apply(is.na(raw_data),1,any),],envir=.GlobalEnv)
+  assign("dataname","drv",envir=.GlobalEnv)
+  assign('nz',dim(X)[1],envir=.GlobalEnv)
+  assign('nw',dim(X)[2],envir=.GlobalEnv)
+}
+
 load_charity_data<-function()
 {
   rawdata=read.table('../Data/charity.dat')
@@ -33,7 +51,7 @@ load_big5_data<-function()
   rawdata <- rawdata[!apply(is.na(rawdata),1,any),]
   
   #only taking a sample
-  samp <- sample(1:nrow(rawdata), 50)
+  samp <- sample(1:nrow(rawdata), 500)
   rawdata <- rawdata[samp,]
 
   assign("X", rawdata ,envir=.GlobalEnv)

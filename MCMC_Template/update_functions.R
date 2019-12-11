@@ -49,7 +49,7 @@ plot_latent_cluster <- function(stored_parameters,store_index,mytitle="",save_fi
   w=data.frame(stored_parameters$w[[store_index]]) #data.frame(matrix(stored_parameters$w[M,],nw,2))
   names(w)<-c('coord1','coord2')
   nw=dim(w)[1]
-  ncluster=2 #max(c(stored_parameters$K_z[[store_index]],stored_parameters$K_w[[store_index]]))
+  ncluster=1 #max(c(stored_parameters$K_z[[store_index]],stored_parameters$K_w[[store_index]]))
   
   temp_z=sapply(stored_parameters$K_z[[store_index]],function(x) paste(toString(x)))
   z$K=as.factor(temp_z)
@@ -57,6 +57,8 @@ plot_latent_cluster <- function(stored_parameters,store_index,mytitle="",save_fi
   temp_w=sapply(stored_parameters$K_w[[store_index]],function(x) paste(toString(x)))
   w$K=as.factor(temp_w)
   w$name=sapply(1:nw,toString)
+  
+  total <- rowSums(X)
   
   if(plot_pie)
   {
@@ -73,7 +75,10 @@ plot_latent_cluster <- function(stored_parameters,store_index,mytitle="",save_fi
   mu$K=sapply(1:ncluster,function(x) paste(toString(x)))
   mu$r=stored_parameters$sigma[[store_index]]
 
-  p0<-ggplot()+geom_point(aes(x=coord1,y=coord2,pch=K,col=gender),z,cex=2)
+  p0<-ggplot()+geom_point(aes(x=coord1,y=coord2,pch=K,col=total),z,cex=2)
+  mid<-mean(total)
+  p0 <- p0+scale_color_gradient2(midpoint=mid, low="blue", mid="white",
+                            high="red", space ="Lab" )
   p0<-p0+xlab('coordinate 1')+ylab('coordinate 2')
   p0<-p0+ggtitle(paste('Latent space sample at k=',mytitle,sep=''))
   p0<-p0+geom_point(aes(x=coord1,y=coord2),pch=8,col='black',data=mu)
@@ -183,8 +188,8 @@ update_K <- function(varname="")
     }
     return(sample(size=1,x=1:ncluster,replace=T,prob=p))
   }
-  K_z=apply(probs_z,2,sample_k)
-  K_w=apply(probs_w,2,sample_k)
+  K_z=ifelse(ncluster == 1, rep(1,nz), apply(probs_z,2,sample_k))
+  K_w=ifelse(ncluster == 1, rep(1,nw), apply(probs_w,2,sample_k))
   
   return(list("K_z"=K_z,"K_w"=K_w))
 }
